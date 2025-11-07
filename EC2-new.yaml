@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+- name: Start an EC2 instance
+  amazon.aws.ec2_instance:
+    name: ansible-test-instance
+    key_name: "my-key-pair"
+    security_group: default
+    instance_type: "t2.micro"
+    region: "us-east-1"
+    image_id: "ami-0abcdef1234567890"
+    count: 1
+    wait: yess
+    tags:
+      Name: ansible-trgt
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ ec2_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ ec2_secret_key }}"
